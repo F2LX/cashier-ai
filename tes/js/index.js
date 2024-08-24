@@ -109,11 +109,11 @@ function clickPass(){
     console.log(a);
     if(a==1){
         document.getElementById('pass').type='password';
-        document.getElementById('pass-icon').src='pass-hide.png';
+        document.getElementById('pass-icon').src='image/pass-hide.png';
         a=0;
     }else{
         document.getElementById('pass').type='text';
-        document.getElementById('pass-icon').src='pass-show.png';
+        document.getElementById('pass-icon').src='image/pass-show.png';
         a=1;
     }
 }
