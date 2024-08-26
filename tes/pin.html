@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP Verification Form</title>
+    <link rel="stylesheet" href="css/pin.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/c8524177bd.js" crossorigin="anonymous"></script>
+    <script src="js/pin.js" defer></script>
+  </head>
+  <body>
+    <img src="image/logo-white.png" class="logo" alt="">
+    <div class="container">
+      <header>
+        <i class="bx bxs-check-shield"></i>
+      </header>
+      <h4>Enter PIN</h4>
+      <form action="#">
+        <div class="input-field">
+          <input type="number" maxlength="1" />
+          <input type="number" maxlength="1" disabled />
+          <input type="number" maxlength="1" disabled />
+          <input type="number" maxlength="1" disabled />
+          <input type="number" maxlength="1" disabled />
+          <input type="number" maxlength="1" disabled />
+        </div>
+        <div class="pin-pad">
+          <!-- PIN Pad will be generated here -->
+        </div>
+        <button id="verifyButton">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
