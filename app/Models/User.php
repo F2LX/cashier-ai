@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(FaceData::class);
     }
+    
+    public function cart(): HasOne
+    {
+        return $this->hasOne(Cart::class);
+    }
 }
