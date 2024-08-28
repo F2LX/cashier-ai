@@ -29,6 +29,11 @@ input[type=number] {
     font-weight: bold;
 }
 
+button{
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+}
+
 .total {
     font-size: 18px; /* Font size for the total */
     font-weight: 500; /* Make the total amount bold */
@@ -63,6 +68,8 @@ header{
     padding: 20px 0;
 }
 .icon-cart{
+    display: flex;
+    gap: 10px;
     position: relative;
 }
 .icon-cart span{
@@ -110,6 +117,7 @@ header{
     padding: 5px 10px;
     margin-top: 10px;
     border-radius: 20px;
+    
 }
 
 .checkout{
@@ -221,10 +229,73 @@ body.showCart .container{
     width: 0;
 }
 
-.shelves{
-    width: 35px;
-    height: 35px;
+.pass-icon{
+    width: 30px;
+    height: 30px;
 }
+
+.camera {
+    display: none; /* Initially hidden, controlled by JS */
+    /* Additional styling for the camera view */
+}
+
+.cam{
+    width: 900px;
+    height: 650px;
+    background-color: gray;
+}
+
+.icon{
+    height: 40px;
+    display: flex;
+    cursor: pointer;
+    padding: 10px 15px;
+    background-color: #fff;
+    border-radius: 100%;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.icon:hover{
+    background-color: #92b9bc;
+}
+
+
+.box{
+    height: 40px;
+    display: flex;
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-radius: 30px;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.box:hover input{
+    width: 400px;
+}
+
+.box input{
+    width: 0;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    transition: 0.8s;
+    background: trasnparent;
+    font-family: "Poppins", sans-serif;
+}
+
+.box a .fas{
+    color: #11A3B0;
+    font-size: 18px;
+}
+
+.logo{
+    width: 70px;
+    height: 70px;
+}
+
 
 @media only screen and (max-width: 992px) {
     .listProduct{
