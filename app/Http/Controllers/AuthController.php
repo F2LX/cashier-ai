@@ -15,15 +15,20 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return view('login');
+        return view('index');
+    }
+
+    public function pay()
+    {
+        return view('pay');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function register()
+    public function product()
     {
-        return view('register');
+        return view('products');
     }
 
     /**
@@ -57,6 +62,8 @@ class AuthController extends Controller
             $face->user_id = $user->id;
             $face->img = $encodedImage;
             $face->save();
+        } else {
+            dd($request);
         }
 
         return redirect()->back()->with('success', 'Registration successful.');

@@ -160,7 +160,7 @@ const updateCartQuantity = (product_id, newQuantity) => {
 
 const initApp = () => {
     // get data product
-    fetch('products.json')
+    fetch('http://127.0.0.1:8000/js/products.json')
     .then(response => response.json())
     .then(data => {
         products = data;
