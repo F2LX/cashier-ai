@@ -12,6 +12,7 @@ class Products extends Component
     public $cart = [];
     public $totalQuantity = 0;
     public $totalAmount = 0;
+    public $showCamera = true; // New property to manage camera visibility
 
     public function mount()
     {
@@ -23,6 +24,18 @@ class Products extends Component
         if (session()->has('cart')) {
             $this->cart = session('cart');
             $this->updateCartTotals();
+        }
+
+        if ($this->showCamera) {
+            $this->dispatch('cameraToggledOn');
+        }
+    }
+    public function toggleView()
+    {
+        $this->showCamera = !$this->showCamera;
+
+        if ($this->showCamera) {
+            $this->dispatch('cameraToggledOn');
         }
     }
 
