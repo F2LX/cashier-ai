@@ -1,0 +1,312 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+body{
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Untuk Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Untuk Internet Explorer 10+ */
+input[type=number] {
+    -ms-appearance: none;
+}
+
+.num{
+    width: 30px;
+    height: 25px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+}
+
+button{
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+}
+
+.total {
+    font-size: 18px; /* Font size for the total */
+    font-weight: 500; /* Make the total amount bold */
+    display: flex;
+    align-items: center;
+    position:absolute;
+    bottom: 76px;
+    width: 100%;
+    height: 76px;
+    background-color: black;
+    padding-left: 10px;
+    
+
+}
+
+
+.container{
+    width: 900px;
+    margin: auto;
+    max-width: 90vw;
+    text-align: center;
+    padding-top: 10px;
+    transition: transform .5s;
+}
+svg{
+    width: 30px;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+.icon-cart{
+    display: flex;
+    gap: 10px;
+    position: relative;
+}
+.icon-cart span{
+    position: absolute;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #fff;
+    top: 50%;
+    right: -20px;
+}
+.title{
+    font-size: xx-large;
+}
+.listProduct .item img{
+    width: 90%;
+    filter: drop-shadow(0 50px 20px #0009);
+}
+.listProduct{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.listProduct .item{
+    background-color: #EEEEE6;
+    padding: 20px;
+    border-radius: 20px;
+}
+.listProduct .item h2{
+    font-weight: 500;
+    font-size: large;
+}
+.listProduct .item .price{
+    letter-spacing: 7px;
+    font-size: small;
+}
+.listProduct .item button{
+    background-color: #353432;
+    color: #eee;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 20px;
+    
+}
+
+.checkout{
+    position: absolute;
+    bottom: 0px;
+    transition: font-size 0.3s ease;
+    width: 100%;
+    color: white;
+}
+
+.checkout:hover{
+    font-size: 20px;
+}
+
+
+/* cart */
+.cartTab{
+    width: 500px;
+    background-color: black;
+    color: #eee;
+    position: fixed;
+    top: 0;
+    right: -400px;
+    bottom: 0;
+    display: grid;
+    grid-template-rows: 70px 1fr 70px;
+    transition: .5s;
+    overflow: hidden;
+}
+body.showCart .cartTab{
+    right: 0;
+}
+body.showCart .container{
+    transform: translateX(-250px);
+}
+.cartTab h1{
+    padding: 10px;
+    margin: 0;
+    font-weight: 500;
+}
+.cartTab .btn{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.cartTab button{
+    background-color: #11A3B0;
+    border: none;
+    font-family: Poppins;
+    font-weight: 500;
+    cursor: pointer;
+    height: 76px;
+    color: white;
+    font-size: 17px;
+    /* position: fixed;
+    bottom: 0; */
+}
+.cartTab .close{
+    background-color: #eee;
+}
+.listCart{
+    /* height: calc(100%-100px); */
+    height: 90%;
+    overflow-y:auto;
+}
+
+
+.listCart .item img{
+    width: 100%;
+    margin-left: 10px;
+}
+.listCart .item{
+    display: grid;
+    grid-template-columns: 70px 165px 30px 1fr 1.5fr;
+    gap: 10px;
+    text-align: center;
+    align-items: center;
+}
+.quantity{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.listCart .quantity span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    background-color: black;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    border: 3px solid white;
+}
+.listCart .quantity span:nth-child(2){
+    background-color: transparent;
+    color: #eee;
+    cursor: auto;
+}
+.listCart .item:nth-child(even){
+    background-color: rgba(255, 255, 255,0.1);
+}
+.listCart{
+    overflow: auto;
+}
+.listCart::-webkit-scrollbar{
+    width: 0;
+}
+
+.pass-icon{
+    width: 30px;
+    height: 30px;
+}
+
+.camera {
+    display: none; /* Initially hidden, controlled by JS */
+    /* Additional styling for the camera view */
+}
+
+.cam{
+    width: 900px;
+    height: 650px;
+    background-color: gray;
+}
+
+.icon{
+    height: 40px;
+    display: flex;
+    cursor: pointer;
+    padding: 10px 15px;
+    background-color: #fff;
+    border-radius: 100%;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* .icon:hover{
+    background-color: #92b9bc;
+} */
+
+
+.box{
+    height: 40px;
+    display: flex;
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-radius: 30px;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.box:hover input{
+    width: 400px;
+}
+
+.box input{
+    width: 0;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    transition: 0.8s;
+    background: trasnparent;
+    font-family: "Poppins", sans-serif;
+}
+
+.box a .fas{
+    color: #11A3B0;
+    font-size: 18px;
+}
+
+.logo{
+    width: 70px;
+    height: 70px;
+}
+
+
+@media only screen and (max-width: 992px) {
+    .listProduct{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+/* mobile */
+@media only screen and (max-width: 768px) {
+    .listProduct{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

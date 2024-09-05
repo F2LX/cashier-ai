@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Interface</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #000;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+        }
+
+        .container {
+            width: 320px;
+            background: #1c1c1c;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .header h2 {
+            margin: 0;
+            padding-bottom: 10px;
+        }
+
+        .account-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .change-account {
+            background: none;
+            border: none;
+            color: #33ccff;
+            font-weight: bold;
+        }
+
+        .input-area {
+            margin-top: 20px;
+        }
+
+        .currency-input {
+            background: #333;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .currency-input input {
+            background: none;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 24px;
+            width: 100%;
+            margin-left: 5px;
+            text-align: right;
+        }
+
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .preset {
+            background: #444;
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 48%;
+            text-align: center;
+        }
+
+        .keypad {
+            margin-top: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .key {
+            background: #444;
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            width: 68px;
+            height: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .operator {
+            background: #333;
+        }
+
+        .delete {
+            background: #ff3333;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #444;
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h2>Top up</h2>
+            <div class="account-info">
+                <span class="account-name">Shirley Margaretta</span>
+                <span class="account-number">Tabungan by Jago 10575476...</span>
+                <button class="change-account">Ganti</button>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="currency-input">
+                Rp
+                <input type="text" id="amount" readonly>
+            </div>
+            <div class="preset-buttons">
+                <button class="preset" data-value="18500">Rp18.5k</button>
+                <button class="preset" data-value="48500">Rp48.5k</button>
+                <button class="preset" data-value="98500">Rp98.5k</button>
+                <button class="preset" data-value="198500">Rp198.5k</button>
+                <button class="preset" data-value="298500">Rp298.5k</button>
+                <button class="preset" data-value="498500">Rp498.5k</button>
+            </div>
+        </div>
+
+        <div class="keypad">
+            <div class="row">
+                <button class="key">1</button>
+                <button class="key">2</button>
+                <button class="key">3</button>
+                <button class="key operator">÷</button>
+            </div>
+            <div class="row">
+                <button class="key">4</button>
+                <button class="key">5</button>
+                <button class="key">6</button>
+                <button class="key operator">×</button>
+            </div>
+            <div class="row">
+                <button class="key">7</button>
+                <button class="key">8</button>
+                <button class="key">9</button>
+                <button class="key operator">-</button>
+            </div>
+            <div class="row">
+                <button class="key">0</button>
+                <button class="key">000</button>
+                <button class="key delete">&times;</button>
+                <button class="key operator">+</button>
+            </div>
+        </div>
+
+        <button class="submit-btn">Review transfer</button>
+    </div>
+
+    <script>
+        const amountInput = document.getElementById('amount');
+        const presetButtons = document.querySelectorAll('.preset');
+        const keys = document.querySelectorAll('.key');
+
+        presetButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                amountInput.value = button.dataset.value;
+            });
+        });
+
+        keys.forEach(key => {
+            key.addEventListener('click', () => {
+                if (key.classList.contains('delete')) {
+                    amountInput.value = amountInput.value.slice(0, -1);
+                } else {
+                    amountInput.value += key.textContent.trim();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
