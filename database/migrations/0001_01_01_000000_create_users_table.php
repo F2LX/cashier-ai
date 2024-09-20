@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->float('wallet');
+            $table->float('wallet')->default(0.0);
             $table->string('role')->default('user');
             $table->rememberToken();
             $table->timestamps();

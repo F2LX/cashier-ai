@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('groceries', function (Blueprint $table) {
             $table->id();
+            $table->string('thumbnail');
             $table->string('product_name');
             $table->string('class')->unique();
             $table->float('price');
-            $table->integer('stock');
             $table->timestamps();
         });
     }

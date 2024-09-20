@@ -30,12 +30,12 @@
       <!--begin::Fullscreen Toggle-->
                     <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
                     <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-person-circle"></i>
-                        <span class="d-none d-md-inline"> Alexander Pierce</span> </a>
+                        <span class="d-none d-md-inline ms-1"> Felix Febryan Wana</span> </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
                             <li class="user-header text-bg-primary"> <i class="bi bi-person-circle"></i>
 
                                 <p>
-                                    Alexander Pierce - Web Developer
+                                    Felix Febryan Wana - Web Developer
                                     <small>Member since Nov. 2023</small>
                                 </p>
                             </li> <!--end::User Image--> <!--begin::Menu Body-->
@@ -53,7 +53,7 @@
             </div> <!--end::Container-->
         </nav> <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link"> <!--begin::Brand Image--> <img src="../../dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light">AdminLTE 4</span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link"> <!--begin::Brand Image--> <img src="../../dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light">CASHPER</span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
@@ -64,22 +64,16 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/admin" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Home</p>
                                     </a> </li>
-                                <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="./add-product" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Add Product</p>
                                     </a> </li>
                                 <li class="nav-item"> <a href="./index3.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Manage Product</p>
                                     </a> </li>
                             </ul>
-                        </li>
-                        
-                        <li class="nav-header">EXAMPLES</li>
-                                <li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Lockscreen</p>
-                                    </a> </li>
                         </li>
                     </ul> <!--end::Sidebar Menu-->
                 </nav>

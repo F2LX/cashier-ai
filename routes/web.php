@@ -16,5 +16,9 @@ Route::post('/pay-post', [AuthController::class,'login']);
 
 Route::get('/admin', [AdminController::class,'index']);
 
+Route::get('/manage', [AdminController::class,'manage']);
 
+Route::get('/add-product', [AdminController::class,'addindex']);
+
+Route::post('/add-product/post', [AdminController::class,'store']);
 

@@ -3,8 +3,8 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Models\Groceries;
 use Illuminate\Support\Facades\Storage;
-
 
 class Products extends Component
 {
@@ -12,24 +12,35 @@ class Products extends Component
     public $cart = [];
     public $totalQuantity = 0;
     public $totalAmount = 0;
-    public $showCamera = true; // New property to manage camera visibility
+    public $showCamera = true;
 
     public function mount()
-    {
-        // Load products from JSON or database
-        $productsJson = file_get_contents(public_path('js/products.json'));
+{
+    $this->products = Groceries::all()->map(function ($product) {
+        return [
+            'id' => $product->id,
+            'name' => $product->product_name,
+            'class' => $product->class,
+            'price' => $product->price,
+            'image' => Storage::url($product->thumbnail) // Generate URL for thumbnail
+        ];
+    })->keyBy('id')->toArray(); // Key products by their id
 
-        $this->products = $productsJson ? json_decode($productsJson, true) : [];
-        // Load cart from session
-        if (session()->has('cart')) {
-            $this->cart = session('cart');
-            $this->updateCartTotals();
-        }
-
-        if ($this->showCamera) {
-            $this->dispatch('cameraToggledOn');
-        }
+    if (session()->has('cart')) {
+        // Just assign the cart directly from the session without re-keying it
+        $this->cart = session('cart');
+    
+        // Update totals after loading the cart
+        $this->updateCartTotals();
     }
+    
+
+    if ($this->showCamera) {
+        $this->dispatch('cameraToggledOn');
+    }
+}
+
+
     public function toggleView()
     {
         $this->showCamera = !$this->showCamera;
@@ -40,28 +51,24 @@ class Products extends Component
     }
 
     public function addToCart($productId)
-    {
-        // Fixed logical error while adding items to cart.
-        $index = $this->findProductInCart($productId);
-        
-        if ($index !== false) {
-            // If the item is already in the cart, just increase the quantity
-            $this->cart[$index]['quantity']++;
-        } else {
-            // If the item is not in the cart, add it with quantity 1
-            $this->cart[] = ['product_id' => $productId, 'quantity' => 1];
-        }
-    
-        $this->updateCartTotals();
-        $this->saveCartToSession();
+{
+    if (isset($this->cart[$productId])) {
+        $this->cart[$productId]['quantity']++;
+    } else {
+        $this->cart[$productId] = ['product_id' => $productId, 'quantity' => 1];
     }
+    
+    $this->updateCartTotals();
+    $this->saveCartToSession();
+}
+
     
 
     public function changeQuantityCart($productId, $type)
     {
         $index = $this->findProductInCart($productId);
-        
-        if ($index >= 0) {
+
+        if ($index !== false) {
             if ($type === 'plus') {
                 $this->cart[$index]['quantity']++;
             } elseif ($type === 'minus') {
@@ -71,45 +78,46 @@ class Products extends Component
                     $this->cart = array_values($this->cart); // Reindex the array
                 }
             }
-        }
 
-        $this->updateCartTotals();
-        $this->saveCartToSession();
+            $this->updateCartTotals();
+            $this->saveCartToSession();
+        }
     }
 
     public function updateCartQuantity($productId, $newQuantity)
-    {
-        $index = $this->findProductInCart($productId);
-
-        if ($index >= 0 && $newQuantity > 0) {
-            $this->cart[$index]['quantity'] = $newQuantity;
-        } elseif ($newQuantity <= 0) {
-            unset($this->cart[$index]);
-            $this->cart = array_values($this->cart); // Reindex the array
-        }
-
-        $this->updateCartTotals();
-        $this->saveCartToSession();
+{
+    if ($newQuantity > 0) {
+        $this->cart[$productId]['quantity'] = $newQuantity;
+    } else {
+        unset($this->cart[$productId]);
     }
 
-    private function findProductInCart($productId)
-    {
-        return collect($this->cart)->search(function ($item) use ($productId) {
-            return $item['product_id'] == $productId;
-        });
-    }
+    $this->updateCartTotals();
+    $this->saveCartToSession();
+}
+
+    
+
+private function findProductInCart($productId)
+{
+    // Directly check if the productId exists as a key in the cart array
+    return array_key_exists($productId, $this->cart) ? $productId : false;
+}
 
     private function updateCartTotals()
-    {
-        $this->totalQuantity = 0;
-        $this->totalAmount = 0;
+{
+    $this->totalQuantity = 0;
+    $this->totalAmount = 0;
 
-        foreach ($this->cart as $item) {
-            $product = collect($this->products)->firstWhere('id', $item['product_id']);
+    foreach ($this->cart as $productId => $item) {
+        $product = collect($this->products)->firstWhere('id', $productId); // Use $productId directly
+        if ($product) {
             $this->totalQuantity += $item['quantity'];
             $this->totalAmount += $product['price'] * $item['quantity'];
         }
     }
+}
+
 
     private function saveCartToSession()
     {

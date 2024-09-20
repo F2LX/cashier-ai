@@ -300,7 +300,6 @@ body.showCart .container{
     height: 70px;
 }
 
-
 @media only screen and (max-width: 992px) {
     .listProduct{
         grid-template-columns: repeat(3, 1fr);

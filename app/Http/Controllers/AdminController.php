@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Groceries;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -14,12 +15,24 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
+    public function addindex()
+    {
+        return view('admin.addproduct');
+    }
+
+    public function manage()
+    {
+        $items=Groceries::all();
+        return view('admin.manage',compact('items'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function showProducts()
     {
-        //
+        
     }
 
     /**
@@ -27,7 +40,23 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+        // Handle file upload
+        if ($request->hasFile('thumbnail')) {
+            // Simpan file ke dalam folder 'thumbnails' di storage
+            $path = $request->file('thumbnail')->store('thumbnails', 'public');
+        } else {
+            $path = null;
+        }
+
+        // Simpan data produk ke dalam database
+        $product = new Groceries;
+        $product->product_name = $request->input('product_name');
+        $product->price = $request->input('price');
+        $product->class = $request->input('class');
+        $product->thumbnail = $path; // Simpan path thumbnail
+        $product->save();
+
     }
 
     /**
