@@ -51,9 +51,8 @@
             <div class="totalPrice">${{ $subtotal }}</div>
             <div class="quantity">
                 <span wire:click="changeQuantityCart({{ $productId }}, 'minus')" class="minus">-</span>
-<input wire:model="cart.{{ $productId }}.quantity" class="num" type="number" min="1">
-<span wire:click="changeQuantityCart({{ $productId }}, 'plus')" class="plus">+</span>
-
+                <input wire:model="cart.{{ $productId }}.quantity" class="num" type="number" min="1">
+                <span wire:click="changeQuantityCart({{ $productId }}, 'plus')" class="plus">+</span>
             </div>
         </div>
     @endif
