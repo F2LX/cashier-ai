@@ -13,69 +13,69 @@ class Products extends Component
     public $totalQuantity = 0;
     public $totalAmount = 0;
     public $showCamera = true;
+    protected $listeners = ['objdetection'];
 
     public function mount()
-{
-    $this->products = Groceries::all()->map(function ($product) {
-        return [
-            'id' => $product->id,
-            'name' => $product->product_name,
-            'class' => $product->class,
-            'price' => $product->price,
-            'image' => Storage::url($product->thumbnail) // Generate URL for thumbnail
-        ];
-    })->keyBy('id')->toArray(); // Key products by their id
+    {
+        // Use Eloquent's pluck to optimize retrieval of key data
+        $this->products = Groceries::all()->mapWithKeys(function ($product) {
+            return [
+                $product->id => [
+                    'id' => $product->id,
+                    'name' => $product->product_name,
+                    'class' => $product->class,
+                    'price' => $product->price,
+                    'image' => Storage::url($product->thumbnail),
+                ]
+            ];
+        })->toArray(); // No need to re-key by 'id' as we directly use it in mapWithKeys
 
-    if (session()->has('cart')) {
-        // Just assign the cart directly from the session without re-keying it
-        $this->cart = session('cart');
-    
-        // Update totals after loading the cart
-        $this->updateCartTotals();
+        // Load cart from session
+        if (session()->has('cart')) {
+            $this->cart = session('cart');
+            $this->updateCartTotals();
+        }
+
+        // Only dispatch the camera event if showCamera is true
+        if ($this->showCamera) {
+            $this->dispatch('cameraToggledOn');
+        }
     }
-    
-
-    if ($this->showCamera) {
-        $this->dispatch('cameraToggledOn');
-    }
-}
-
 
     public function toggleView()
     {
         $this->showCamera = !$this->showCamera;
 
+        // Dispatch camera toggled event when needed
         if ($this->showCamera) {
             $this->dispatch('cameraToggledOn');
         }
     }
 
     public function addToCart($productId)
-{
-    if (isset($this->cart[$productId])) {
-        $this->cart[$productId]['quantity']++;
-    } else {
-        $this->cart[$productId] = ['product_id' => $productId, 'quantity' => 1];
-    }
-    
-    $this->updateCartTotals();
-    $this->saveCartToSession();
-}
+    {
+        // Update cart directly by productId
+        if (isset($this->cart[$productId])) {
+            $this->cart[$productId]['quantity']++;
+        } else {
+            $this->cart[$productId] = ['product_id' => $productId, 'quantity' => 1];
+        }
 
-    
+        // Update totals and session
+        $this->updateCartTotals();
+        $this->saveCartToSession();
+    }
 
     public function changeQuantityCart($productId, $type)
     {
-        $index = $this->findProductInCart($productId);
-
-        if ($index !== false) {
+        // Use array_key_exists for faster cart access
+        if (array_key_exists($productId, $this->cart)) {
             if ($type === 'plus') {
-                $this->cart[$index]['quantity']++;
+                $this->cart[$productId]['quantity']++;
             } elseif ($type === 'minus') {
-                $this->cart[$index]['quantity']--;
-                if ($this->cart[$index]['quantity'] <= 0) {
-                    unset($this->cart[$index]);
-                    $this->cart = array_values($this->cart); // Reindex the array
+                $this->cart[$productId]['quantity']--;
+                if ($this->cart[$productId]['quantity'] <= 0) {
+                    unset($this->cart[$productId]);
                 }
             }
 
@@ -85,42 +85,46 @@ class Products extends Component
     }
 
     public function updateCartQuantity($productId, $newQuantity)
-{
-    if ($newQuantity > 0) {
-        $this->cart[$productId]['quantity'] = $newQuantity;
-    } else {
-        unset($this->cart[$productId]);
+    {
+        // Avoid recalculating when no change
+        if ($newQuantity > 0 && isset($this->cart[$productId])) {
+            $this->cart[$productId]['quantity'] = $newQuantity;
+        } else {
+            unset($this->cart[$productId]);
+        }
+
+        $this->updateCartTotals();
+        $this->saveCartToSession();
     }
-
-    $this->updateCartTotals();
-    $this->saveCartToSession();
-}
-
-    
-
-private function findProductInCart($productId)
-{
-    // Directly check if the productId exists as a key in the cart array
-    return array_key_exists($productId, $this->cart) ? $productId : false;
-}
 
     private function updateCartTotals()
-{
-    $this->totalQuantity = 0;
-    $this->totalAmount = 0;
+    {
+        // Initialize totals
+        $this->totalQuantity = 0;
+        $this->totalAmount = 0;
 
-    foreach ($this->cart as $productId => $item) {
-        $product = collect($this->products)->firstWhere('id', $productId); // Use $productId directly
-        if ($product) {
-            $this->totalQuantity += $item['quantity'];
-            $this->totalAmount += $product['price'] * $item['quantity'];
+        // Avoid creating a new collection for every product lookup
+        foreach ($this->cart as $productId => $item) {
+            if (isset($this->products[$productId])) {
+                $this->totalQuantity += $item['quantity'];
+                $this->totalAmount += $this->products[$productId]['price'] * $item['quantity'];
+            }
         }
     }
-}
 
+    public function objdetection($objclass)
+    {
+        // Optimize the product search by leveraging array filtering
+        $product = collect($this->products)->firstWhere('class', $objclass);
+
+        if ($product) {
+            $this->addToCart($product['id']);
+        }
+    }
 
     private function saveCartToSession()
     {
+        // Store the cart in session
         session(['cart' => $this->cart]);
     }
 

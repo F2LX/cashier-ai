@@ -2,6 +2,7 @@
     <div class="container" style="height: 100vh !important;">
         <header>
             <img src="image/logo-no-background.png" class="logo" alt="">
+            <h3>Hi, {{ auth()->user()->name }}</h3>
             <div class="icon-cart">
                 <div class="box">
                     <input type="text" placeholder="Search...">
@@ -27,8 +28,8 @@
         </div>
 
         <div class="camera" style="display: {{ $showCamera ? 'block' : 'none' }}; width:100%; height: 80vh !important">
-            <video id="video" class="vid" autoplay style="display: none"></video>
-            <canvas id="canvas" class="overlay" style="height: 100%"></canvas>
+            <video id="video" class="vid" wire:ignore autoplay style="display: none"></video>
+            <canvas id="canvas" class="overlay" wire:ignore style="height: 100%"></canvas>
         </div>
         
     </div>
@@ -39,7 +40,7 @@
             @foreach ($cart as $productId => $item)
     @php
         $product = $products[$productId] ?? null; // Access product by its ID directly
-        $subtotal = $product ? $product['price'] * $item['quantity'] : 0;
+        $subtotal = $product ? $product['price'] * (!is_numeric($item['quantity'])?1:$item['quantity']) : 0;
     @endphp
     @if ($product)
         <div class="item" data-id="{{ $productId }}">
@@ -51,7 +52,7 @@
             <div class="totalPrice">${{ $subtotal }}</div>
             <div class="quantity">
                 <span wire:click="changeQuantityCart({{ $productId }}, 'minus')" class="minus">-</span>
-                <input wire:model="cart.{{ $productId }}.quantity" class="num" type="number" min="1">
+                <input wire:model.live="cart.{{ $productId }}.quantity" class="num" type="number" min="1">
                 <span wire:click="changeQuantityCart({{ $productId }}, 'plus')" class="plus">+</span>
             </div>
         </div>
@@ -61,6 +62,7 @@
         </div>
         <div class="total">
             <p>Total: $<span id="totalAmount">{{ number_format($totalAmount, 2) }}</span></p>
+            <p>Wallet: ${{ number_format(auth()->user()->wallet,2) }}</p>
         </div>
         <button class="checkout">Check Out</button>
     </div>
@@ -77,11 +79,13 @@
 Livewire.on('cameraToggledOn', function () {
     init();
 });
-
 let model;
 let video;
 let canvas;
 let ctx;
+let lastSent = 0;  // Waktu terakhir pengiriman data
+const cooldownTime = 1500;  // 1.5 detik
+const confidenceThreshold = 0.6;  // Set minimal confidence level 60%
 
 async function loadModel() {
     // Load the COCO-SSD model
@@ -110,7 +114,6 @@ async function setupWebcam() {
 }
 
 function detectFrame() {
-
     // Set canvas width and height to match the video dimensions
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
@@ -118,6 +121,7 @@ function detectFrame() {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     model.detect(video).then(predictions => {
         drawPredictions(predictions);
+        checkAndSend(predictions);  // Cek dan kirim objek jika terdeteksi
         requestAnimationFrame(detectFrame);
     });
 }
@@ -146,6 +150,24 @@ function drawPredictions(predictions) {
         ctx.fillStyle = 'white';
         ctx.fillText(text, x, y > 10 ? y - 5 : 10);
     });
+}
+
+// Cek prediksi dan kirim ke server jika terdeteksi
+function checkAndSend(predictions) {
+    const now = Date.now();
+
+    // Hanya kirim jika cooldown sudah selesai
+    if (now - lastSent >= cooldownTime) {
+        predictions.forEach(prediction => {
+            // Kirim objek yang confidence-nya di atas threshold
+            if (prediction.score >= confidenceThreshold && prediction.class != "person") {
+                // Livewire.emit('namaMetode', parameter1, parameter2);
+                lastSent = now;  // Update waktu pengiriman terakhir
+                // console.log("Bottle detected",prediction.score)
+                Livewire.dispatch('objdetection',[prediction.class]);
+            }
+        });
+    }
 }
 </script>
 @endscript

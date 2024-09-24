@@ -142,14 +142,16 @@ document.addEventListener('keydown', (e) => {
   } else if (keyMapping[key] !== undefined || (key >= '0' && key <= '9')) {
     e.preventDefault(); // Prevent the default input behavior for all number keys
     triggerButtonClick(key);
+  } else {
+    e.preventDefault();
   }
 });
-
+const form = document.getElementById('pin-form');
 document.getElementById("verifyButton").addEventListener("click", function() {
   console.log("Button clicked"); // Debugging log
   if (verifyButton.classList.contains("active")) {
     console.log("Redirecting to products.html"); // Debugging log
-    window.location.href = "products.html";
+    form.submit();
   } else {
     console.log("Button is not active"); // Debugging log
   }
