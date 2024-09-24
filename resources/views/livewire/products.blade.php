@@ -64,7 +64,9 @@
             <p>Total: $<span id="totalAmount">{{ number_format($totalAmount, 2) }}</span></p>
             <p>Wallet: ${{ number_format(auth()->user()->wallet,2) }}</p>
         </div>
-        <button class="checkout">Check Out</button>
+        <a href="/pin">
+            <button class="checkout">Check Out</button>
+        </a>
     </div>
 
     <!-- Include TensorFlow.js -->

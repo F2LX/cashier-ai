@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class,'index']);
 Route::get('/invoice', [AuthController::class,'invoice']);
+Route::get('/reset', [AuthController::class,'reset']);
+
 
 Route::post('/register-post', [AuthController::class,'store']);
 

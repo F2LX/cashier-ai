@@ -30,12 +30,12 @@
                 </div>
                 <div class="num">
                   <h2>Invoice ID</h2>
-                  <h1>CO190G8</h1>
+                  <h1>CASHPER01</h1>
                 </div>
               </div>
               <div class="judul">
                 <div class="Nom">
-                  <p>No.</p>
+                  <p>ID.</p>
                 </div>
                 <div class="Nam">
                   <p>Product</p>
@@ -51,23 +51,30 @@
                 </div>
               </div>
                 <div class="atas">
-                  @foreach ($cart as $product)
+
+                  @php
+                      $total=0;
+                  @endphp
+                  @foreach ($products as $product)
                   <div class="barang">
                     <div class="no">
-                      <li></li>
+                      {{ $product['id'] }}
                     </div>
                       <div class="nama">
-                        <p>Indomie</p>
+                        <p> {{ $product['product_name'] }}</p>
                       </div>
                       <div class="qty">
-                        <p>4</p>
+                        <p>{{ $product['quantity'] }}</p>
                       </div>
                       <div class="harga">
-                        <p>Rp. 3.000</p>
+                        <p>{{ $product['price'] }}</p>
                       </div>
                       <div class="amount">
-                        <p>Rp. 12.000</p>
+                        <p>{{ $product['price'] * $product['quantity'] }}</p>
                       </div>
+                      @php
+                        $total+=$product['price'] * $product['quantity'];
+                      @endphp
                   </div>
                   @endforeach
                  
@@ -86,13 +93,13 @@
                     </div>
                     <div class="kanan">
                       <div class="sub">
-                        <h3>Rp. 100.000</h3>
+                        <h3>{{ $total }}</h3>
                       </div>
                       <div class="tx">
-                        <h3>Rp. 10.000</h3>
+                        <h3>{{ $total *10/100 }}</h3>
                       </div>
                       <div class="ttl">
-                        <h3>Rp. 110.000</h3>
+                        <h3>{{ $total + ($total *10/100) }}</h3>
                       </div>
                       
                     </div>
@@ -138,7 +145,7 @@
               <span></span>
               Print Receipt
             </a>
-            <a class="but1" href="index.html">
+            <a class="but1" href="/reset">
               <span></span>
               <span></span>
               <span></span>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Groceries;
 use App\Models\FaceData;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
@@ -31,8 +32,40 @@ class AuthController extends Controller
     public function invoice() 
     {
         
-        $cart = session()->get('cart');
-        return view('invoice',compact('cart'));
+        // Mengambil cart dari session
+    $cart = session()->get('cart', []);
+
+    // Ambil semua product_id dari cart
+    $productIds = array_keys($cart);
+
+    // Query efisien menggunakan whereIn untuk mengambil product_name dan price
+    $products = Groceries::whereIn('id', $productIds)
+        ->get(['id', 'product_name', 'price'])
+        ->map(function($product) use ($cart) {
+            return [
+                'id' => $product->id,
+                'product_name' => $product->product_name,
+                'quantity' => $cart[$product->id]['quantity'],
+                'price' => $product->price
+            ];
+        });
+
+    // Menampilkan ke view dengan data products
+    return view('invoice', compact('products'));
+    }
+
+    public function reset(Request $request) {
+        // Logout the user
+    Auth::logout();
+
+    // Invalidate the current session
+    $request->session()->invalidate();
+
+    // Regenerate session token to prevent session fixation attacks
+    $request->session()->regenerateToken();
+
+    // Redirect user to the login page or any other page
+    return redirect('/')->with('success', 'You have been successfully logged out.');
     }
 
     public function validatepin(Request $request) {
