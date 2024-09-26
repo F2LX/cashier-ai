@@ -30,3 +30,4 @@ Route::get('/add-product', [AdminController::class,'addindex']);
 
 Route::post('/add-product/post', [AdminController::class,'store']);
 
+

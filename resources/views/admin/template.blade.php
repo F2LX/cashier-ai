@@ -53,7 +53,7 @@
             </div> <!--end::Container-->
         </nav> <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link"> <!--begin::Brand Image--> <img src="../../dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light">CASHPER</span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link"> <!--begin::Brand Image--> <img src="{{ asset('alte/img/logo-no-background.png') }}" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light">CASHPER</span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
@@ -64,7 +64,7 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="/admin" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/admin" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Home</p>
                                     </a> </li>
                                 <li class="nav-item"> <a href="./add-product" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
@@ -116,6 +116,31 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script> <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
     <script src="{{ asset('alte/js/adminlte.js') }}"></script> <!--end::Required Plugin(AdminLTE)-->
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener to all links inside the nav-treeview
+            document.querySelectorAll('.nav-treeview .nav-link').forEach(function(navLink) {
+                navLink.addEventListener('click', function() {
+                    // Remove 'active' class from all nav links in the nav-treeview
+                    document.querySelectorAll('.nav-treeview .nav-link').forEach(function(link) {
+                        link.classList.remove('active');
+                    });
+                    // Add 'active' class to the clicked link
+                    this.classList.add('active');
+                });
+            });
+
+            // Automatically set the 'active' link based on the current URL
+            const currentUrl = window.location.pathname;
+            document.querySelectorAll('.nav-treeview .nav-link').forEach(function(navLink) {
+                if (navLink.getAttribute('href') === currentUrl) {
+                    navLink.classList.add('active');
+                }
+            });
+        });
+
+    </script> -->
+
 </body><!--end::Body-->
 
 </html>

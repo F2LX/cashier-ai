@@ -50,8 +50,6 @@
 </div> <!--end::Row-->
     </div> <!-- /.Start col -->
 
-    <div class="container">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sint nesciunt unde a sed ducimus omnis accusamus beatae! Quos ducimus earum iure dicta consequuntur modi laboriosam quae vel voluptas sunt.</p>
-    </div>
+    
 </div> <!-- /.row (main row) -->
 @endsection
