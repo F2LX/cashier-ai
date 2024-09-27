@@ -20,17 +20,5 @@
         </form>
     </div>
 
-    <script>
-    // Add an event listener to all nav-link elements
-    document.querySelectorAll('.nav-link').forEach(function(navLink) {
-        navLink.addEventListener('click', function() {
-            // Remove 'active' from all links
-            document.querySelectorAll('.nav-link').forEach(function(link) {
-                link.classList.remove('active');
-            });
-            // Add 'active' to the clicked link
-            this.classList.add('active');
-        });
-    });
-    </script>
+    
 @endsection
