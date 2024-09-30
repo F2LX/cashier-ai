@@ -26,6 +26,18 @@ class AdminController extends Controller
         return view('admin.manage',compact('items'));
     }
 
+    public function delete($id)
+    {
+        // Misalnya kamu ingin menghapus produk berdasarkan ID
+        $product = Groceries::find($id);
+    
+        if ($product) {
+            $product->delete();
+            return redirect()->back()->with('success', 'Produk berhasil dihapus.');
+        } else {
+            return redirect()->back()->with('error', 'Produk tidak ditemukan.');
+        }
+    }
 
     /**
      * Show the form for creating a new resource.

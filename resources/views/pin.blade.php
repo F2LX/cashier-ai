@@ -12,6 +12,16 @@
     <script src="{{ asset("js/pin.js") }}" defer></script>
   </head>
   <body>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    @if (session('error'))
+    <script>
+        Swal.fire({
+            title: "Try again!",
+            text: "{{ session('error') }}",
+            icon: "error"
+        });
+    </script>
+  @endif
     <img src="image/logo-white.png" class="logo" alt="">
     <div class="container">
       <header>

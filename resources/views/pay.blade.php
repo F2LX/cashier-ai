@@ -25,6 +25,16 @@
             CAPTURE
         </button>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('error'))
+    <script>
+        Swal.fire({
+            title: "Try again!",
+            text: "{{ session('error') }}",
+            icon: "error"
+        });
+    </script>
+  @endif
     <script src="{{ asset('js/pay.js') }}"></script>
 </body>
 </html>

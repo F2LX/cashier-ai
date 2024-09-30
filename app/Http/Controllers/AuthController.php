@@ -17,6 +17,9 @@ class AuthController extends Controller
      */
     public function index()
     {
+        if (auth()->user()) {
+            return redirect('/reset');
+        }
         return view('index');
     }
 
@@ -79,7 +82,7 @@ class AuthController extends Controller
             return redirect('/invoice');
         } else {
             // Tindakan ketika PIN tidak cocok
-            dd($user);
+            return redirect()->back()->with('error','Incorrect pin, please try again!');
         }
     }
     /**
@@ -118,7 +121,7 @@ class AuthController extends Controller
 
             // Check if face is valid
             if (isset($flaskResponse['valid']) && $flaskResponse['valid'] === false) {
-                return redirect()->back()->with('error', 'Face not detected');
+                return redirect()->back()->with('error', 'No face detected or matched');
             }
             $user = new User();
             $user->name = $request->name;
@@ -154,7 +157,7 @@ class AuthController extends Controller
             }
             return redirect('/products');
         } else {
-            return redirect()->back()->with("Error","Muka tidak terdeteksi.");
+            return redirect()->back()->with("error","No face detected!");
         }
     }
 

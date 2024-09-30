@@ -10,6 +10,7 @@
                 <th>Product Name</th>
                 <th>Price</th>
                 <th style="width: 40px">Label/Class</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,9 @@
                         {{ $item->price }}
                     </td>
                     <td>{{ $item->class }}</td>
+                    <td>
+                        <a href="/delete/{{ $item->id }}" class="btn btn-danger">Delete</a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
