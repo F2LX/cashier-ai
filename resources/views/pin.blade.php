@@ -9,19 +9,9 @@
     <link rel="icon" type="image/png" href="image/logo-no-background.png"/>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/c8524177bd.js" crossorigin="anonymous"></script>
-    <script src="{{ asset("js/pin.js") }}" defer></script>
+    
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-    @if (session('error'))
-    <script>
-        Swal.fire({
-            title: "Try again!",
-            text: "{{ session('error') }}",
-            icon: "error"
-        });
-    </script>
-  @endif
     <img src="image/logo-white.png" class="logo" alt="">
     <div class="container">
       <header>
@@ -58,5 +48,17 @@
         <button id="verifyButton">Submit</button>
       </form>
     </div>
+    <script src="{{ asset("js/pin.js") }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('error'))
+    <script>
+    verifyButton.disabled = false;
+        Swal.fire({
+            title: "Try again!",
+            text: "{{ session('error') }}",
+            icon: "error"
+        });
+    </script>
+  @endif
   </body>
 </html>

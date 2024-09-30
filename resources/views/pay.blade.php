@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="{{ asset('css/pay.css') }}" />
 </head>
 <body>
-    <img src="{{ asset('image/logo-no-background.png') }}" class="logo" alt="">
+    <a href="/">
+    <img src="{{ asset('image/logo-no-background.png') }}" class="logo" alt=""></a>
     <i class="fa-solid fa-arrow-up fa-2xl arrow bounce2" style="color: #11a3b0;"></i>
     <h1 class="title">Smile to the Camera</h1>
     <form id="captureForm" action="/pay-post" method="post" enctype="multipart/form-data" style="display: flex; flex-direction:column; align-items:center;">

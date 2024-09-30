@@ -10,7 +10,7 @@ Route::get('/invoice', [AuthController::class,'invoice'])->middleware('auth');
 Route::get('/reset', [AuthController::class,'reset']);
 
 
-Route::post('/register-post', [AuthController::class,'store'])->middleware('auth');
+Route::post('/register-post', [AuthController::class,'store']);
 
 Route::get('/pay', [AuthController::class,'pay']);
 Route::get('/pin', [AuthController::class,'pin'])->middleware('auth');

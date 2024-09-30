@@ -82,7 +82,7 @@ class AuthController extends Controller
             return redirect('/invoice');
         } else {
             // Tindakan ketika PIN tidak cocok
-            return redirect()->back()->with('error','Incorrect pin, please try again!');
+            return redirect('/pin')->with('error','Incorrect pin, please try again!');
         }
     }
     /**
@@ -155,7 +155,7 @@ class AuthController extends Controller
             if ($user) {
                 Auth::login($user, false);
             }
-            return redirect('/products');
+            return redirect('/products')->with('success','You can now start scanning items.');
         } else {
             return redirect()->back()->with("error","No face detected!");
         }
